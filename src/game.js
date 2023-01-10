@@ -1,4 +1,5 @@
 import Menu from "./menu.js";
+import Stage from './stage.js';
 
 const config = {
     type: Phaser.AUTO,
@@ -24,9 +25,10 @@ const config = {
             debug: false
         }
     },
-    scene: [ Menu ],
+    scene: [ Menu, Stage ],
 	title: "Examen Ordinaria 2022-2023 PVLI",
 	version: "1.0.0"
 };
 
+// Crear juego
 new Phaser.Game(config);
