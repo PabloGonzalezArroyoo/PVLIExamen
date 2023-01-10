@@ -1,3 +1,4 @@
+import Fire from "./fire.js";
 import Floor from "./floor.js";
 import MetersRect from "./metersRect.js";
 import Player from "./player.js";
@@ -46,8 +47,9 @@ export default class Stage extends Phaser.Scene {
 
         // Rectángulo metros
         let distanceRect = width - 250;
+        this.metersRect = [];
         for (let i = 0; i < this.meters / 10; i++) {
-            new MetersRect(this, 120 + distanceRect * i, height - 40, this.meters - 10 * i);
+            this.metersRect[i] = new MetersRect(this, 120 + distanceRect * i, height - 40, this.meters - 10 * i);
         }
 
         // Jugador (león y payaso)
@@ -57,6 +59,10 @@ export default class Stage extends Phaser.Scene {
         this.floor = new Floor(this, height - 115).setScrollFactor(0, 0);
         this.physics.add.collider(this.player, this.floor);
         // this.floor = this.add.rectangle(0, height - 115, width, 2, '#000000', 1).setOrigin(0, 0);
+
+        // Obstáculos
+        this.fire = new Fire(this, -100, - 100);
+        this.physics.add.collider(this.player, this.fire);
 
         // UI
         this.ui = [];
@@ -79,6 +85,8 @@ export default class Stage extends Phaser.Scene {
     update(t, dt) {
         super.update(t, dt);
 
-        
+        if (this.metersRect[1] === this.player.x || this.metersRect[3] === this.player.x) {
+            new Fire(this, width, height - 200);
+        }
     }
 }

@@ -32,6 +32,7 @@ export default class Player extends Phaser.GameObjects.Container {
 
         // Variables extra
         this.speed = 100;
+        this.initialX = x;
     }
 
     preUpdate(t, dt) {
@@ -45,7 +46,7 @@ export default class Player extends Phaser.GameObjects.Container {
             this.lion.play('lionWalk');
             this.player.setFrame(1);
         }
-        else if (this.cursorLEFT.isDown) {
+        else if (this.cursorLEFT.isDown && this.x > 160) {
             console.log("hola2");
             this.body.setVelocityX(-this.speed);
             this.lion.play('lionWalk');
@@ -66,4 +67,6 @@ export default class Player extends Phaser.GameObjects.Container {
         }
         
     }
+
+    getDistance() { return this.x - this.initialX; }
 }
