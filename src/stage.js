@@ -1,3 +1,4 @@
+import Floor from "./floor.js";
 import MetersRect from "./metersRect.js";
 import Player from "./player.js";
 
@@ -6,6 +7,8 @@ export default class Stage extends Phaser.Scene {
     constructor() {
         super({key: 'Stage'});
         this.meters;
+        this.highscore = 0;
+        this.score = 0;
     }
 
     init(data) {
@@ -50,6 +53,16 @@ export default class Stage extends Phaser.Scene {
         // Jugador (león y payaso)
         this.player = new Player(this, 160, height - 200);
 
+        // Suelo
+        this.floor = new Floor(this, height - 115).setScrollFactor(0, 0);
+        this.physics.add.collider(this.player, this.floor);
+        // this.floor = this.add.rectangle(0, height - 115, width, 2, '#000000', 1).setOrigin(0, 0);
+
+        // UI
+        this.ui = [];
+        this.ui[0] = this.add.text(width / 2, height / 7 - 30, 'HIGHSCORE: ' + this.highscore, {fontSize: 20, color: '#d62215', fontFamily: 'arcade_classic'}).setOrigin(0.5, 0.5).setAlign('center').setScrollFactor(0, 0);
+        this.ui[1] = this.add.text(width / 2, height / 6 - 20, 'SCORE: ' + this.score, {fontSize: 20, color: '#ffffff', fontFamily: 'arcade_classic'}).setOrigin(0.5, 0.5).setAlign('center').setScrollFactor(0, 0);
+
         // Reproducir música
 		const musicConfig = {
 			mute: false,
@@ -61,5 +74,11 @@ export default class Stage extends Phaser.Scene {
 		}
 		this.music = this.sound.add('stage');
     	this.music.play(musicConfig);
+    }
+
+    update(t, dt) {
+        super.update(t, dt);
+
+        
     }
 }
